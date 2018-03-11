@@ -1,0 +1,16 @@
+{
+  "name": "panoptes",
+  "description": "",
+  "version": "0.0.0",
+  "private": true,
+  "dependencies": {
+    "express": "4.15.4"
+  },
+  "engines": {
+    "node": "6.11.2",
+    "npm": "3.10.10"
+  },
+  "scripts": {
+    "start": "node server.js"
+  }
+}

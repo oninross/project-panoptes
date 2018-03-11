@@ -1,0 +1,523 @@
+// croppie
+.croppie-container {
+    width: 100%;
+    height: 100%;
+
+    .cr-image {
+        z-index: -1;
+        position: absolute;
+        top: 0;
+        left: 0;
+        transform-origin: 0 0;
+        max-height: none;
+        max-width: none;
+    }
+
+    .cr-boundary {
+        position: relative;
+        overflow: hidden;
+        margin: 0 auto;
+        z-index: 1;
+        width: 100%;
+        height: 100%;
+    }
+
+    .cr-viewport {
+        position: absolute;
+        border: 2px solid #fff;
+        margin: auto;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        left: 0;
+        box-shadow: 0 0 2000px 2000px rgba(0, 0, 0, 0.5);
+        z-index: 0;
+    }
+
+    .cr-resizer {
+        position: absolute;
+        border: 2px solid #fff;
+        margin: auto;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        left: 0;
+        box-shadow: 0 0 2000px 2000px rgba(0, 0, 0, 0.5);
+        z-index: 0;
+        z-index: 2;
+        box-shadow: none;
+        pointer-events: none;
+    }
+
+    .cr-resizer-vertical, .cr-resizer-horisontal {
+        position: absolute;
+        pointer-events: all;
+    }
+
+    .cr-resizer-vertical::after, .cr-resizer-horisontal::after {
+        display: block;
+        position: absolute;
+        box-sizing: border-box;
+        border: 1px solid black;
+        background: #fff;
+        width: 10px;
+        height: 10px;
+        content: '';
+    }
+
+    .cr-resizer-vertical {
+        bottom: -5px;
+        cursor: row-resize;
+        width: 100%;
+        height: 10px;
+
+        &::after {
+            left: 50%;
+            margin-left: -5px;
+        }
+    }
+
+    .cr-resizer-horisontal {
+        right: -5px;
+        cursor: col-resize;
+        width: 10px;
+        height: 100%;
+
+        &::after {
+            top: 50%;
+            margin-top: -5px;
+        }
+    }
+
+    .cr-original-image {
+        display: none;
+    }
+
+    .cr-vp-circle {
+        border-radius: 50%;
+    }
+
+    .cr-overlay {
+        z-index: 1;
+        position: absolute;
+        cursor: move;
+        touch-action: none;
+    }
+
+    .cr-slider-wrap {
+        width: 75%;
+        margin: 15px auto;
+        text-align: center;
+    }
+}
+
+.croppie-result {
+    position: relative;
+    overflow: hidden;
+
+    img {
+        position: absolute;
+    }
+}
+
+.croppie-container {
+    .cr-image, .cr-overlay, .cr-viewport {
+        -webkit-transform: translateZ(0);
+        -moz-transform: translateZ(0);
+        -ms-transform: translateZ(0);
+        transform: translateZ(0);
+    }
+}
+
+/*************************************/
+/***** STYLING RANGE INPUT ***********/
+/*************************************/
+/*http://brennaobrien.com/blog/2014/05/style-input-type-range-in-every-browser.html */
+/*************************************/
+
+.cr-slider {
+    -webkit-appearance: none;
+
+    /*removes default webkit styles*/
+    /*border: 1px solid white; */
+    /*fix for FF unable to apply focus style bug */
+    width: 300px;
+
+    /*required for proper track sizing in FF*/
+    max-width: 100%;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    background-color: transparent;
+
+    &::-webkit-slider-runnable-track {
+        width: 100%;
+        height: 3px;
+        background: rgba(0, 0, 0, 0.5);
+        border: 0;
+        border-radius: 3px;
+    }
+
+    &::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        border: none;
+        height: 16px;
+        width: 16px;
+        border-radius: 50%;
+        background: #ddd;
+        margin-top: -6px;
+    }
+
+    &:focus {
+        outline: none;
+    }
+
+    &::-moz-range-track {
+        width: 100%;
+        height: 3px;
+        background: rgba(0, 0, 0, 0.5);
+        border: 0;
+        border-radius: 3px;
+    }
+
+    &::-moz-range-thumb {
+        border: none;
+        height: 16px;
+        width: 16px;
+        border-radius: 50%;
+        background: #ddd;
+        margin-top: -6px;
+    }
+
+    &:-moz-focusring {
+        outline: 1px solid white;
+        outline-offset: -1px;
+    }
+
+    &::-ms-track {
+        width: 100%;
+        height: 5px;
+        background: transparent;
+
+        /*remove bg colour from the track, we'll use ms-fill-lower and ms-fill-upper instead */
+        border-color: transparent;
+
+        /*leave room for the larger thumb to overflow with a transparent border */
+        border-width: 6px 0;
+        color: transparent;
+
+        /*remove default tick marks*/
+    }
+
+    &::-ms-fill-lower, &::-ms-fill-upper {
+        background: rgba(0, 0, 0, 0.5);
+        border-radius: 10px;
+    }
+
+    &::-ms-thumb {
+        border: none;
+        height: 16px;
+        width: 16px;
+        border-radius: 50%;
+        background: #ddd;
+        margin-top: 1px;
+    }
+
+    &:focus {
+        &::-ms-fill-lower, &::-ms-fill-upper {
+            background: rgba(0, 0, 0, 0.5);
+        }
+    }
+}
+
+/*
+.cr-slider:focus::-webkit-slider-runnable-track {
+background: #ccc;
+}
+*/
+
+/*hide the outline behind the border*/
+
+/*******************************************/
+
+/***********************************/
+/* Rotation Tools */
+/***********************************/
+
+.cr-rotate-controls {
+    position: absolute;
+    bottom: 5px;
+    left: 5px;
+    z-index: 1;
+
+    button {
+        border: 0;
+        background: none;
+    }
+
+    i:before {
+        display: inline-block;
+        font-style: normal;
+        font-weight: 900;
+        font-size: 22px;
+    }
+}
+
+.cr-rotate-l i:before {
+    content: '↺';
+}
+
+.cr-rotate-r i:before {
+    content: '↻';
+}
+
+// photoapp styles
+.photoapp {
+    height: 100vh;
+    overflow: hidden;
+    position: relative;
+
+    &__message {
+        color: $white;
+        font-weight: $thin;
+        font-size: 4em;
+        line-height: 1.25;
+        padding: 0 20px;
+        position: absolute;
+        top: 25px;
+        text-align: center;
+        text-shadow: 0 1px 8px $black;
+        width: 100%;
+        z-index: 10;
+    }
+
+    &__loader {
+        @include transition(transform, $animTime, $easeInOutExpo);
+
+        @include absolute-center;
+
+        @include material-shadow(1);
+
+        background: $white;
+        border-radius: 50%;
+        height: 75px;
+        transform: translateY(0);
+        width: 75px;
+        z-index: 100;
+
+        &:before {
+            content: '';
+            display: block;
+            padding-top: 100%;
+        }
+
+        &.-hide {
+            transform: translateY(60vh);
+        }
+
+        .percent {
+            bottom: 0;
+            font-weight: $bold;
+            margin-top: 30px;
+            position: absolute;
+            text-align: center;
+            top: 0;
+            width: 100%;
+        }
+    }
+
+    &__polaroid {
+        @include transition((opacity, transform), $animTime, $easeInOutExpo);
+
+        @include absolute-center;
+
+        border: 20px solid $white;
+        height: 275px;
+        opacity: 1;
+        transform: translateY(0) rotate(-5deg);
+        width: 275px;
+        z-index: 20;
+
+        img {
+            margin-bottom: 0;
+        }
+
+        &.-hide {
+            transform: translateY(78vh) rotate(5deg);
+            opacity: 0;
+        }
+
+        &.-throw {
+            transform: translateY(-78vh) rotate(5deg);
+            opacity: 0;
+        }
+
+        .photowall & {
+            @include transition(none, 0s, linear);
+
+            bottom: auto;
+            right: auto;
+            transform: translateX(36vw) translateY(-65vh) rotate(0);
+        }
+    }
+
+    &__viewer {
+        @include transition((filter, transform), $animTime, $easeInOutExpo);
+
+        filter: blur(0);
+        height: 100%;
+        position: relative;
+        transform: scale(1);
+        z-index: 1;
+
+        &:before {
+            @include transition(height, $animTime, $easeInOutExpo);
+
+            background-color: #000;
+            content: '';
+            display: block;
+            height: 0;
+            opacity: 0.5;
+            position: absolute;
+            width: 100%;
+            z-index: 5;
+        }
+
+        &.-preview {
+            filter: blur(15px);
+            transform: scale(1.25);
+        }
+
+        &.-disabled {
+            &:before {
+                height: 100%;
+            }
+        }
+
+        .croppie-container .cr-viewport {
+            border: 2px solid $yellow;
+        }
+    }
+
+    &__controls {
+        @include transition(transform, $animTime, $easeOutExpo);
+
+        align-items: flex-end;
+        bottom: 0;
+        display: flex;
+        justify-content: center;
+        position: absolute;
+        transform: translateY(0);
+        width: 100%;
+        z-index: 10;
+
+        &.-disabled {
+            transform: translateY(90px);
+        }
+    }
+
+    &__hidden {
+        display: none;
+    }
+
+    &__btn {
+        @include transition((box-shadow, background-color), $animTime, $easeOutExpo);
+
+        @include material-shadow(2);
+
+        background-color: $white;
+        border: 0;
+        border-radius: 50%;
+        height: 50px;
+        margin: 20px;
+        overflow: hidden;
+        position: relative;
+        transform: translateY(0);
+        width: 50px;
+
+        &:active {
+            @include material-shadow(1);
+        }
+
+        svg {
+            @include transition(opacity, $animTime, $easeOutExpo);
+
+            fill: $black;
+            height: 25px;
+            opacity: 1;
+            width: 25px;
+        }
+
+        circle {
+            fill: $black;
+        }
+
+        &.-camera {
+            @include transition(transform, $animTime, $easeInOutExpo);
+
+            @include absolute-center;
+
+            height: 150px;
+            transform: translateY(0);
+            width: 150px;
+            z-index: 15;
+
+            svg {
+                fill: $black;
+                height: 75px;
+                width: 75px;
+            }
+        }
+
+        &.-hide {
+            transform: translateY(-65vh);
+        }
+
+        &.-delete {
+            background-color: $red;
+
+            svg {
+                fill: $white;
+            }
+
+            circle {
+                fill: $black;
+            }
+        }
+
+        &.-rotate {
+            background-color: $white;
+
+            .-preview & {
+                @include material-shadow(1);
+
+                background-color: darken($white, 25%);
+
+                svg {
+                    opacity: 0.25;
+                }
+            }
+        }
+
+        &.-done {
+            background-color: $green;
+
+            svg {
+                fill: $white;
+            }
+
+            circle {
+                fill: $black;
+            }
+
+            .-preview & {
+                @include material-shadow(1);
+
+                background-color: darken($green, 25%);
+
+                svg {
+                    opacity: 0.25;
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,116 @@
+{
+  "name": "panoptes",
+  "version": "0.0.10",
+  "dependencies": {
+    "browserify-shim": "^3.8.12",
+    "croppie": "^2.5.0",
+    "dot": "^1.1.2",
+    "firebase": "^4.3.0",
+    "gsap": "^1.19.1",
+    "hammerjs": "^2.0.8",
+    "imagesloaded": "^4.1.3",
+    "jquery": "~2.2.0",
+    "jquery-lazyload": "^1.9.7",
+    "malihu-custom-scrollbar-plugin": "^3.1.5",
+    "normalize.css": "~5.0.0",
+    "scrollmonitor": "^1.2.3"
+  },
+  "devDependencies": {
+    "autoprefixer": "~6.7.5",
+    "babel-core": "~6.23.1",
+    "babel-eslint": "~7.1.1",
+    "babel-plugin-add-module-exports": "~0.2.1",
+    "babel-preset-es2015": "~6.22.0",
+    "babelify": "~7.3.0",
+    "browser-sync": "~2.18.0",
+    "browserify": "~13.0.1",
+    "del": "~2.2.2",
+    "envify": "~4.0.0",
+    "foldero": "~0.1.1",
+    "glob": "~7.1.1",
+    "gulp": "~3.9.1",
+    "gulp-bump": "^2.7.0",
+    "gulp-changed": "~2.0.0",
+    "gulp-cssnano": "~2.1.2",
+    "gulp-data": "~1.2.1",
+    "gulp-eslint": "~3.0.1",
+    "gulp-htmlmin": "~3.0.0",
+    "gulp-if": "~2.0.2",
+    "gulp-imagemin": "~3.1.1",
+    "gulp-jade": "~1.1.0",
+    "gulp-load-plugins": "~1.5.0",
+    "gulp-notify": "~3.0.0",
+    "gulp-plumber": "~1.1.0",
+    "gulp-postcss": "~6.3.0",
+    "gulp-rename": "~1.2.2",
+    "gulp-sass": "~3.1.0",
+    "gulp-sourcemaps": "~2.4.1",
+    "gulp-uglify": "~2.0.1",
+    "gulp-util": "~3.0.8",
+    "imagemin-pngquant": "~5.0.0",
+    "imagemin-svgo": "~5.2.0",
+    "jade": "~1.11.0",
+    "js-yaml": "~3.8.1",
+    "lodash": "~4.17.4",
+    "minimist": "~1.2.0",
+    "rimraf": "~2.6.1",
+    "vinyl-buffer": "~1.0.0",
+    "vinyl-source-stream": "~1.1.0",
+    "watchify": "~3.9.0 "
+  },
+  "scripts": {
+    "clean-deps": "rimraf node_modules"
+  },
+  "browserify": {
+    "transform": [
+      "browserify-shim"
+    ]
+  },
+  "browser": {
+    "jquery": "./node_modules/jquery/dist/jquery.js",
+    "doT": "./node_modules/doT/doT.js",
+    "lazyload": "./node_modules/jquery-lazyload/jquery.lazyload.js",
+    "TweenLite": "./node_modules/gsap/src/uncompressed/TweenLite.js",
+    "EasePack": "./node_modules/gsap/src/uncompressed/easing/EasePack.js",
+    "AttrPlugin": "./node_modules/gsap/src/uncompressed/plugins/AttrPlugin.js",
+    "CSSPlugin": "./node_modules/gsap/src/uncompressed/plugins/CSSPlugin.js",
+    "mCustomScrollbar": "./node_modules/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js",
+    "scrollMonitor": "./node_modules/scrollmonitor/scrollmonitor.js",
+    "masonry": "./node_modules/masonry-layout/dist/masonry.pkgd.js",
+    "imagesloaded": "./node_modules/imagesloaded/imagesloaded.pkgd.js"
+  },
+  "browserify-shim": {
+    "jquery": "jQuery",
+    "mCustomScrollbar": "mCustomScrollbar",
+    "doT": "doT",
+    "masonry": "masonry",
+    "imagesloaded": "imagesloaded"
+  },
+  "engines": {
+    "node": ">=0.12.0"
+  },
+  "//": "CUSTOM CONFIGURATION",
+  "config": {
+    "//": "Entry files",
+    "host": "127.0.0.1",
+    "port": "3000",
+    "baseUrl": "./",
+    "directories": {
+      "source": "src",
+      "destination": "build",
+      "temporary": "tmp",
+      "//": "Directories relative to `source` directory",
+      "modules": "_modules",
+      "layouts": "_layouts",
+      "images": "_assets/panoptes/images",
+      "css": "_assets/panoptes/css",
+      "fonts": "_assets/panoptes/css/fonts",
+      "js": "_assets/panoptes/js",
+      "data": "_data"
+    },
+    "entries": {
+      "js": "main**.js",
+      "css": "main**.{sass,scss}"
+    }
+  }
+}
