@@ -1,7 +1,7 @@
 {
     "lang": "en",
-    "name": "Interactive Wall",
-    "short_name": "Interactive Wall",
+    "name": "panoptes",
+    "short_name": "panoptes",
     "description": "",
     "start_url": "./photo/index.html",
     "display": "standalone",

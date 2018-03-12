@@ -29,18 +29,6 @@ let $window = $(window),
     lastScrollTop = 0;
 
 $(() => {
-    // Initialize Firebase
-    const config = {
-        apiKey: "AIzaSyAzhfbEZEV5GaMHVjQvLgQB7g6noJvIYMY",
-        authDomain: "panoptes.firebaseapp.com",
-        databaseURL: "https://panoptes.firebaseio.com",
-        projectId: "panoptes",
-        storageBucket: "panoptes.appspot.com",
-        messagingSenderId: "602975578099"
-    };
-
-    firebase.initializeApp(config);
-
     new Photoapp();
 
     ////////////////////////////
