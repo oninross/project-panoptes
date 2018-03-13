@@ -41,7 +41,8 @@ app.post('/godsEye', function (req, res) {
 
         let reqImg = req.body.image,
             params = {
-                images_file: fs.createReadStream('./tmp/' + req.body.name)
+                images_file: fs.createReadStream('./tmp/' + req.body.name),
+                threshold: 0.8
             };
 
         visualRecognition.classify(params, function (err, response) {

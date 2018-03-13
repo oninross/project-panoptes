@@ -1,7 +1,7 @@
 'use strict';
 
 import { ripple, toaster } from '../../../_assets/panoptes/js/_material';
-import { BASE_URL } from '../../../_assets/panoptes/js/_helper';
+import { BASE_URL, iOS } from '../../../_assets/panoptes/js/_helper';
 
 export default class Photoapp {
     constructor() {
@@ -31,7 +31,7 @@ export default class Photoapp {
                     files = tgt.files,
                     square = $window.width() - 50;
 
-                that.$message.text('crop and rotate');
+                that.$message.text('analysing image');
                 that.$camera.addClass('-hide');
 
                 $('body').animate({
@@ -59,8 +59,13 @@ export default class Photoapp {
                             contentType: 'application/json',
                             success: function (data) {
                                 console.log(data);
+
+                                that.$message.text(data.images[0].classifiers[0].classes[0].class);
+
+                                that.speak('en-US', 'native', 'There is a high chance that the image is ' + that.checkForVowel(data.images[0].classifiers[0].classes[0].class) + data.images[0].classifiers[0].classes[0].class);
                             },
                             error: function (err) {
+                                that.$message.text('oops! something went wrong');
                                 console.warn('ERROR');
                                 console.log(err);
                             }
@@ -99,6 +104,18 @@ export default class Photoapp {
 
                 that.reset();
             });
+        }
+    }
+
+    checkForVowel(str) {
+        let word = str,
+            firstLetter = word.charAt(0);
+
+
+        if (firstLetter.match(/[aeiouAEIOU]/)) {
+            return ' an ';
+        } else {
+            return ' a ';
         }
     }
 
@@ -160,5 +177,70 @@ export default class Photoapp {
         that.$loader.addClass('-hide');
         that.$percent.text('0%');
         $('.photoapp__img').attr('src', '');
+    }
+
+    speak(newLang, newVoice, string) {
+        var that = this;
+
+        that.canITalk();
+
+        // Create a new instance of SpeechSynthesisUtterance.
+        var msg = new SpeechSynthesisUtterance();
+
+        // Set the text.
+        msg.text = string;
+
+        msg.volume = 1; // 0 to 1
+        msg.rate = 1; // 0.1 to 10
+        msg.pitch = 1; //0 to 2
+
+        // Set the language
+        msg.lang = newLang;
+
+
+        // If a voice has been selected, find the voice and set the
+        // utterance instance's voice attribute.
+        msg.voice = speechSynthesis.getVoices().filter(function (voice) {
+            return voice.name == newVoice;
+            // native
+            // Google Deutsch
+            // Google US English
+            // Google UK English Female
+            // Google UK English Male
+            // Google español
+            // Google español de Estados Unidos
+            // Google français
+            // Google हिन्दी
+            // Google Bahasa Indonesia
+            // Google italiano
+            // Google 日本語
+            // Google 한국의
+            // Google Nederlands
+            // Google polski
+            // Google português do Brasil
+            // Google русский
+            // Google 普通话（中国大陆）
+            // Google 粤語（香港）
+            // Google 國語（臺灣）
+        })[0];
+
+
+        window.speechSynthesis.speak(msg);
+
+        // msg.onend = function(e) {
+        //     console.log('Finished in ' + event.elapsedTime + ' seconds.');
+        // };
+    }
+
+    canITalk() {
+        if (iOS()) {
+            return false;
+        }
+
+        var SpeechSynthesisUtterance = window.webkitSpeechSynthesisUtterance || window.mozSpeechSynthesisUtterance || window.msSpeechSynthesisUtterance || window.oSpeechSynthesisUtterance || window.SpeechSynthesisUtterance;
+
+        if (SpeechSynthesisUtterance === undefined) {
+            return false;
+        }
     }
 }

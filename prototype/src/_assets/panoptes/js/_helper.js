@@ -1,7 +1,7 @@
 'use strict';
 
-const BASE_URL = '10.16.0.118:8888'; // local
-// const BASE_URL = 'cbrserver.herokuapp.com'; // Production
+// const BASE_URL = '10.16.0.118:8888'; // local
+const BASE_URL = 'natseye.herokuapp.com'; // Production
 
 let debounce = function (func, wait, immediate) {
     var timeout;
@@ -97,6 +97,7 @@ let easeOutExpo = {
 };
 
 export {
+    BASE_URL,
     debounce,
     iOS,
     isMobile,
