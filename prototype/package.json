@@ -1,6 +1,6 @@
 {
   "name": "panoptes",
-  "version": "0.0.10",
+  "version": "0.0.1",
   "dependencies": {
     "browserify-shim": "^3.8.12",
     "dot": "^1.1.2",
