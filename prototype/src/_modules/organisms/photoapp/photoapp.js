@@ -1,7 +1,7 @@
 'use strict';
 
 import { ripple, toaster } from '../../../_assets/panoptes/js/_material';
-import { iOS } from '../../../_assets/panoptes/js/_helper';
+import { BASE_URL } from '../../../_assets/panoptes/js/_helper';
 
 export default class Photoapp {
     constructor() {
@@ -18,7 +18,6 @@ export default class Photoapp {
             that.$loader = $('.photoapp__loader');
             that.$percent = that.$loader.find('.percent');
             that.rotation = 0;
-            that.photoAppView;
 
             $('.js-take-photo').on('click', function () {
                 $('.js-open-photo').trigger('click');
@@ -47,45 +46,27 @@ export default class Photoapp {
                     var fr = new FileReader();
 
                     fr.onload = function (e) {
-                        var json = {
-                            'requests': [
-                                {
-                                    'image': {
-                                        'content': fr.result.replace('data:image/jpeg;base64,', '')
-                                    },
-                                    'features': [
-                                        {
-                                            'type': 'SAFE_SEARCH_DETECTION',
-                                            'maxResults': 200
-                                        }
-                                    ]
-                                }
-                            ]
-                        };
+                        var frRes = fr.result;
 
-                        // $.ajax({
-                        //     type: 'POST',
-                        //     url: 'https://vision.googleapis.com/v1/images:annotate?key=' + API_KEY,
-                        //     dataType: 'json',
-                        //     data: JSON.stringify(json),
-                        //     contentType: 'application/json',
-                        //     success: function (data) {
-                        //         if (that.getLikelihood(data.responses[0].safeSearchAnnotation.adult) > 3 || that.getLikelihood(data.responses[0].safeSearchAnnotation.violence) > 3) {
-                        //             // Inappropriate Images
-                        //             that.$message.text('sorry! you are not allowed to do that!');
+                        $.ajax({
+                            type: 'POST',
+                            url: '//' + BASE_URL + '/godsEye',
+                            dataType: 'json',
+                            data: JSON.stringify({
+                                file: files,
+                                image: frRes
+                            }),
+                            contentType: 'application/json',
+                            success: function (data) {
+                                console.log(data);
+                            },
+                            error: function (err) {
+                                console.warn('ERROR');
+                                console.log(err);
+                            }
+                        });
 
-                        //             that.$controls.addClass('-preview');
-                        //             that.$viewer.addClass('-preview');
-                        //         } else {
-                        //             that.$controls.removeClass('-disabled');
-                        //         }
-                        //     },
-                        //     error: function (err) {
-                        //         console.log('ERRORS: ' + err);
-                        //     }
-                        // });
-
-                        photoAppImg.src = fr.result;
+                        photoAppImg.src = frRes;
 
                         photoAppImg.onload = function () {
                             that.$controls.addClass('-preview').removeClass('-disabled');
@@ -172,13 +153,12 @@ export default class Photoapp {
     reset() {
         const that = this;
 
-        that.photoAppView.destroy();
         that.$message.text('tap to snap a photo');
         that.$viewer.removeClass('-disabled -preview');
         that.$controls.addClass('-disabled').removeClass('-preview');
         that.$camera.removeClass('-hide');
         that.$loader.addClass('-hide');
         that.$percent.text('0%');
-        $('.photoapp__img').unwrap().attr('src', '');
+        $('.photoapp__img').attr('src', '');
     }
 }

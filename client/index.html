@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Interactive Wall</title>
+    <title>panoptes</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=5">
     <link rel="manifest" href="/manifest.json">
@@ -37,7 +37,6 @@
             <circle cx="50" cy="50" r="20" fill="none" stroke-width="4" stroke-miterlimit="10" class="path"></circle>
           </svg>
         </div>
-        <div class="photoapp__polaroid -hide"><img></div>
         <button type="button" class="photoapp__btn -btn -camera js-take-photo">
           <svg viewbox="0 0 24 24">
             <path d="M4,4H7L9,2H15L17,4H20A2,2 0 0,1 22,6V18A2,2 0 0,1 20,20H4A2,2 0 0,1 2,18V6A2,2 0 0,1 4,4M12,7A5,5 0 0,0 7,12A5,5 0 0,0 12,17A5,5 0 0,0 17,12A5,5 0 0,0 12,7M12,9A3,3 0 0,1 15,12A3,3 0 0,1 12,15A3,3 0 0,1 9,12A3,3 0 0,1 12,9Z"></path>
@@ -48,16 +47,6 @@
           <button type="button" class="photoapp__btn -btn -delete js-delete-photo">
             <svg viewbox="0 0 24 24">
               <path d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z"></path>
-            </svg>
-          </button>
-          <button type="button" class="photoapp__btn -btn -rotate js-rotate-photo">
-            <svg viewbox="0 0 24 24">
-              <path d="M7.47,21.5C4.2,19.93 1.86,16.76 1.5,13H0C0.5,19.16 5.66,24 11.95,24C12.18,24 12.39,24 12.61,23.97L8.8,20.15L7.47,21.5M12.05,0C11.82,0 11.61,0 11.39,0.04L15.2,3.85L16.53,2.5C19.8,4.07 22.14,7.24 22.5,11H24C23.5,4.84 18.34,0 12.05,0M16,14H18V8C18,6.89 17.1,6 16,6H10V8H16V14M8,16V4H6V6H4V8H6V16A2,2 0 0,0 8,18H16V20H18V18H20V16H8Z"></path>
-            </svg>
-          </button>
-          <button type="button" class="photoapp__btn -btn -done js-crop-photo">
-            <svg viewbox="0 0 24 24">
-              <path d="M19,19H5V5H15V3H5C3.89,3 3,3.89 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V11H19M7.91,10.08L6.5,11.5L11,16L21,6L19.59,4.58L11,13.17L7.91,10.08Z"></path>
             </svg>
           </button>
           <input type="file" name="file" accept="image/*" capture="" class="photoapp__hidden js-open-photo">
