@@ -67,6 +67,7 @@ export default class Photoapp {
 
                                     that.speak('en-US', 'native', 'There is a high chance that the image is ' + that.checkForVowel(classes[0].class) + classes[0].class);
                                 } else {
+                                    that.$message.text('unknown image');
                                     that.speak('en-US', 'native', 'Sorry, Watston does\'t know what that is.');
                                 }
 
