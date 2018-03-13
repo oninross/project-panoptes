@@ -60,9 +60,16 @@ export default class Photoapp {
                             success: function (data) {
                                 console.log(data);
 
-                                that.$message.text(data.images[0].classifiers[0].classes[0].class);
+                                var classes = data.images[0].classifiers[0].classes;
 
-                                that.speak('en-US', 'native', 'There is a high chance that the image is ' + that.checkForVowel(data.images[0].classifiers[0].classes[0].class) + data.images[0].classifiers[0].classes[0].class);
+                                if (classes.length) {
+                                    that.$message.text(classes[0].class);
+
+                                    that.speak('en-US', 'native', 'There is a high chance that the image is ' + that.checkForVowel(classes[0].class) + classes[0].class);
+                                } else {
+                                    that.speak('en-US', 'native', 'Sorry, Watston does\'t know what that is.');
+                                }
+
                             },
                             error: function (err) {
                                 that.$message.text('oops! something went wrong');
