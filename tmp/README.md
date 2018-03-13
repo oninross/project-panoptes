@@ -1,0 +1,1 @@
+Just placing this file here because I am lazy to do a logic in Node for creating a non-existing folder
