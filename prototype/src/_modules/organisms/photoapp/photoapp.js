@@ -14,8 +14,6 @@ export default class Photoapp {
             that.$message = $('.photoapp__message');
             that.$viewer = $('.photoapp__viewer');
             that.$camera = $('.photoapp__btn.-camera');
-            that.$loader = $('.photoapp__loader');
-            that.$percent = that.$loader.find('.percent');
             that.rotation = 0;
 
             $('.js-take-photo').on('click', function () {
@@ -33,13 +31,6 @@ export default class Photoapp {
                 that.$message.text('analysing image');
                 that.$viewer.removeClass('-hide');
                 that.$camera.addClass('-hide');
-
-                $('body').animate({
-                    scrollTop: $(document).height(),
-                }, {
-                        duration: 500,
-                        easing: 'easeOutExpo'
-                    });
 
                 // FileReader support
                 if (FileReader && files && files.length) {
@@ -179,8 +170,6 @@ export default class Photoapp {
         that.$message.text('tap to snap a photo');
         that.$viewer.addClass('-hide').removeClass('-disabled -preview');
         that.$camera.removeClass('-hide');
-        that.$loader.addClass('-hide');
-        that.$percent.text('0%');
         $('.photoapp__img').removeAttr('src');
     }
 
