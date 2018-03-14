@@ -13,7 +13,6 @@ export default class Photoapp {
             that.$window = $window;
             that.$message = $('.photoapp__message');
             that.$viewer = $('.photoapp__viewer');
-            that.$controls = $('.photoapp__controls');
             that.$camera = $('.photoapp__btn.-camera');
             that.$loader = $('.photoapp__loader');
             that.$percent = that.$loader.find('.percent');
@@ -24,7 +23,7 @@ export default class Photoapp {
             });
 
             $('.js-open-photo').on('change', function (e) {
-                const $this = $(this),
+                let $this = $(this),
                     tgt = e.target || window.event.srcElement,
                     photoAppImg = document.querySelector('.photoapp__img'),
                     hiddenBtn = document.querySelector('.photoapp__hidden'),
@@ -32,6 +31,7 @@ export default class Photoapp {
                     square = $window.width() - 50;
 
                 that.$message.text('analysing image');
+                that.$viewer.removeClass('-hide');
                 that.$camera.addClass('-hide');
 
                 $('body').animate({
@@ -65,7 +65,7 @@ export default class Photoapp {
                                 if (classes.length) {
                                     that.$message.text(classes[0].class);
 
-                                    that.speak('en-US', 'native', 'There is a high chance that the image is ' + that.checkForVowel(classes[0].class) + classes[0].class);
+                                    that.speak('en-US', 'native', 'It\'s ' + that.checkForVowel(classes[0].class) + classes[0].class);
                                 } else {
                                     that.$message.text('unknown image');
                                     that.speak('en-US', 'native', 'Sorry, Watston does\'t know what that is.');
@@ -82,8 +82,6 @@ export default class Photoapp {
                         photoAppImg.src = frRes;
 
                         photoAppImg.onload = function () {
-                            that.$controls.addClass('-preview').removeClass('-disabled');
-
                             that.getOrientation(hiddenBtn.files[0], function (orientation) {
                                 switch (orientation) {
                                     case 8:
@@ -179,12 +177,11 @@ export default class Photoapp {
         const that = this;
 
         that.$message.text('tap to snap a photo');
-        that.$viewer.removeClass('-disabled -preview');
-        that.$controls.addClass('-disabled').removeClass('-preview');
+        that.$viewer.addClass('-hide').removeClass('-disabled -preview');
         that.$camera.removeClass('-hide');
         that.$loader.addClass('-hide');
         that.$percent.text('0%');
-        $('.photoapp__img').attr('src', '');
+        $('.photoapp__img').removeAttr('src');
     }
 
     speak(newLang, newVoice, string) {

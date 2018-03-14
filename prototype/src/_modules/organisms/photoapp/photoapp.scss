@@ -8,7 +8,7 @@
         color: $white;
         font-weight: $thin;
         font-size: 4em;
-        line-height: 1.25;
+        line-height: 1;
         padding: 0 20px;
         position: absolute;
         top: 25px;
@@ -53,74 +53,31 @@
         }
     }
 
-    &__polaroid {
-        @include transition((opacity, transform), $animTime, $easeInOutExpo);
-
+    &__viewer {
         @include absolute-center;
+        @include transition(transform, $animTime, $easeInOutExpo);
 
-        border: 20px solid $white;
+        background-color: $black;
         height: 275px;
-        opacity: 1;
         transform: translateY(0) rotate(-5deg);
         width: 275px;
         z-index: 20;
 
         img {
-            margin-bottom: 0;
+            @include absolute-center;
         }
 
         &.-hide {
-            transform: translateY(78vh) rotate(5deg);
-            opacity: 0;
-        }
-
-        &.-throw {
-            transform: translateY(-78vh) rotate(5deg);
-            opacity: 0;
-        }
-
-        .photowall & {
-            @include transition(none, 0s, linear);
-
-            bottom: auto;
-            right: auto;
-            transform: translateX(36vw) translateY(-65vh) rotate(0);
+            transform: translateY(80vh) rotate(5deg);
         }
     }
 
-    &__viewer {
-        display: flex;
-        height: 100%;
+    &__polaroid {
+        border: 20px solid $white;
+        height: inherit;
+        overflow: hidden;
         position: relative;
-        z-index: 1;
-
-        img {
-            margin: auto;
-        }
-
-        &:before {
-            @include transition(height, $animTime, $easeInOutExpo);
-
-            background-color: #000;
-            content: '';
-            display: block;
-            height: 0;
-            opacity: 0.5;
-            position: absolute;
-            width: 100%;
-            z-index: 5;
-        }
-
-        &.-preview {
-            filter: blur(15px);
-            transform: scale(1.25);
-        }
-
-        &.-disabled {
-            &:before {
-                height: 100%;
-            }
-        }
+        width: inherit;
     }
 
     &__controls {
@@ -145,19 +102,18 @@
     }
 
     &__btn {
-        @include transition((box-shadow, background-color), $animTime, $easeOutExpo);
-
         @include material-shadow(2);
 
         background-color: $white;
         border: 0;
         border-radius: 50%;
         height: 50px;
-        margin: 20px;
         overflow: hidden;
-        position: relative;
-        transform: translateY(0);
+        position: absolute;
+        top: -20px;
+        right: -20px;
         width: 50px;
+        z-index: 10;
 
         &:active {
             @include material-shadow(1);

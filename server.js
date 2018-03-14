@@ -4,6 +4,7 @@ var express = require('express'),
     http = require('http').Server(app),
     bodyParser = require('body-parser'),
     VisualRecognitionV3 = require('watson-developer-cloud/visual-recognition/v3'),
+    ssl = require('express-ssl'),
     router = express.Router(),
     visualRecognition = new VisualRecognitionV3({
         api_key: '6666546e9cca61687197f337b5b0f4f18a08e70c',
@@ -12,6 +13,7 @@ var express = require('express'),
 
 
 app.use(router);
+app.use(ssl());
 app.use(bodyParser.json({ limit: '50mb' }));
 app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 app.use(express.static(__dirname + '/client'));
@@ -22,7 +24,13 @@ app.use(function (req, res, next) {
     res.setHeader('Content-Type', 'application/json');
     res.setHeader('Access-Control-Allow-Credentials', true);
 
-    next();
+    if (req.secure) {
+        // request was via https, so do no special handling
+        next();
+    } else {
+        // request was via http, so redirect to https
+        res.redirect('https://' + req.headers.host + req.url);
+    }
 });
 
 router.get('/', function (req, res) {

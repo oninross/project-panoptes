@@ -6,6 +6,7 @@
   "dependencies": {
     "body-parser": "1.17.2",
     "express": "4.15.4",
+    "express-ssl": "^3.1.0",
     "multer": "^1.3.0",
     "watson-developer-cloud": "^3.1.1"
   },
