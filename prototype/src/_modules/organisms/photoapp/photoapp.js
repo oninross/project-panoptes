@@ -24,16 +24,17 @@ export default class Photoapp {
                 let $this = $(this),
                     tgt = e.target || window.event.srcElement,
                     photoAppImg = document.querySelector('.photoapp__img'),
-                    hiddenBtn = document.querySelector('.photoapp__hidden'),
                     files = tgt.files,
                     square = $window.width() - 50;
 
+                that.hiddenBtn = document.querySelector('.photoapp__hidden');
                 that.$message.text('analysing image');
                 that.$viewer.removeClass('-hide');
                 that.$camera.addClass('-hide');
 
                 // FileReader support
                 if (FileReader && files && files.length) {
+                    console.log('True');
                     var fr = new FileReader();
 
                     fr.onload = function (e) {
@@ -73,7 +74,7 @@ export default class Photoapp {
                         photoAppImg.src = frRes;
 
                         photoAppImg.onload = function () {
-                            that.getOrientation(hiddenBtn.files[0], function (orientation) {
+                            that.getOrientation(that.hiddenBtn.files[0], function (orientation) {
                                 switch (orientation) {
                                     case 8:
                                         that.rotation = -90;
@@ -87,6 +88,10 @@ export default class Photoapp {
                                 }
                             });
                         };
+                    };
+
+                    fr.onerror = function (e) {
+                        console.error(e);
                     };
 
                     fr.readAsDataURL(files[0]);
@@ -167,6 +172,7 @@ export default class Photoapp {
     reset() {
         const that = this;
 
+        that.hiddenBtn.value = '';
         that.$message.text('tap to snap a photo');
         that.$viewer.addClass('-hide').removeClass('-disabled -preview');
         that.$camera.removeClass('-hide');

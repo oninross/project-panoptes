@@ -58,10 +58,20 @@
         @include transition(transform, $animTime, $easeInOutExpo);
 
         background-color: $black;
-        height: 275px;
+        height: 300px;
         transform: translateY(0) rotate(-5deg);
-        width: 275px;
+        width: 300px;
         z-index: 20;
+
+        @include tablet {
+            height: 500px;
+            width: 500px;
+        }
+
+        @include desktop {
+            height: 768px;
+            width: 768px;
+        }
 
         img {
             @include absolute-center;
