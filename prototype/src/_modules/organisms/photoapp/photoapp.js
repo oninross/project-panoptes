@@ -1,7 +1,7 @@
 'use strict';
 
-import { ripple, toaster } from '../../../_assets/panoptes/js/_material';
-import { BASE_URL, iOS } from '../../../_assets/panoptes/js/_helper';
+import { ripple, toaster } from '../../../_assets/natseye/js/_material';
+import { BASE_URL, iOS } from '../../../_assets/natseye/js/_helper';
 
 export default class Photoapp {
     constructor() {
@@ -78,12 +78,20 @@ export default class Photoapp {
                                 success: function (data) {
                                     console.log(data);
 
-                                    var classes = data.images[0].classifiers[0].classes;
+                                    var classes = data.images[0].classifiers[0].classes,
+                                        desc = '';
 
                                     if (classes.length) {
                                         that.$message.text(classes[0].class);
 
                                         that.speak('en-US', 'native', 'It\'s ' + that.checkForVowel(classes[0].class) + classes[0].class);
+
+                                        $.each(classes, function (i, v) {
+                                            console.log(v)
+                                            desc += '<p><strong>' + v.class + '</strong>: ' + v.score + '</p>';
+                                        });
+
+                                        $('.photoapp__details').html(desc);
                                     } else {
                                         that.$message.text('unknown image');
                                         that.speak('en-US', 'native', 'Sorry, Watston does\'t know what that is.');
@@ -206,6 +214,7 @@ export default class Photoapp {
         that.$viewer.addClass('-hide').removeClass('-disabled -preview');
         that.$camera.removeClass('-hide');
         $('.photoapp__img').removeAttr('src');
+        $('.photoapp__details').empty();
     }
 
     speak(newLang, newVoice, string) {

@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>panoptes</title>
+    <title>natseye</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=5">
     <link rel="manifest" href="/manifest.json">
@@ -12,30 +12,32 @@
     <meta name="msapplication-TileColor" content="#111111">
     <meta name="msapplication-TileImage" content="images/favicon/ms-icon-144x144.png">
     <meta name="theme-color" content="#111111">
-    <link rel="apple-touch-icon" sizes="57x57" href="/assets/panoptes/images/favicon/apple-icon-57x57.png">
-    <link rel="apple-touch-icon" sizes="60x60" href="/assets/panoptes/images/favicon/apple-icon-60x60.png">
-    <link rel="apple-touch-icon" sizes="72x72" href="/assets/panoptes/images/favicon/apple-icon-72x72.png">
-    <link rel="apple-touch-icon" sizes="76x76" href="/assets/panoptes/images/favicon/apple-icon-76x76.png">
-    <link rel="apple-touch-icon" sizes="114x114" href="/assets/panoptes/images/favicon/apple-icon-114x114.png">
-    <link rel="apple-touch-icon" sizes="120x120" href="/assets/panoptes/images/favicon/apple-icon-120x120.png">
-    <link rel="apple-touch-icon" sizes="144x144" href="/assets/panoptes/images/favicon/apple-icon-144x144.png">
-    <link rel="apple-touch-icon" sizes="152x152" href="/assets/panoptes/images/favicon/apple-icon-152x152.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="/assets/panoptes/images/favicon/apple-icon-180x180.png">
-    <link rel="icon" type="image/png" sizes="192x192" href="/assets/panoptes/images/favicon/android-icon-192x192.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/assets/panoptes/images/favicon/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="96x96" href="/assets/panoptes/images/favicon/favicon-96x96.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/assets/panoptes/images/favicon/favicon-16x16.png">
-    <link rel="stylesheet" href="/assets/panoptes/css/main.css">
+    <link rel="apple-touch-icon" sizes="57x57" href="/assets/natseye/images/favicon/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/assets/natseye/images/favicon/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/assets/natseye/images/favicon/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/assets/natseye/images/favicon/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/assets/natseye/images/favicon/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/assets/natseye/images/favicon/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/assets/natseye/images/favicon/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/assets/natseye/images/favicon/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/natseye/images/favicon/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/assets/natseye/images/favicon/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/natseye/images/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="/assets/natseye/images/favicon/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/natseye/images/favicon/favicon-16x16.png">
+    <link rel="stylesheet" href="/assets/natseye/css/main.css">
   </head>
   <body>
     <main id="main">
       <section class="section photoapp">
         <div class="photoapp__message">tap to snap a photo</div>
+        <input type="file" name="userPhoto" accept="image/*" capture="" class="photoapp__hidden js-open-photo">
         <button type="button" class="photoapp__btn -btn -camera js-take-photo">
           <svg viewbox="0 0 24 24">
             <path d="M4,4H7L9,2H15L17,4H20A2,2 0 0,1 22,6V18A2,2 0 0,1 20,20H4A2,2 0 0,1 2,18V6A2,2 0 0,1 4,4M12,7A5,5 0 0,0 7,12A5,5 0 0,0 12,17A5,5 0 0,0 17,12A5,5 0 0,0 12,7M12,9A3,3 0 0,1 15,12A3,3 0 0,1 12,15A3,3 0 0,1 9,12A3,3 0 0,1 12,9Z"></path>
           </svg>
         </button>
+        <div class="photoapp__details"></div>
         <div class="photoapp__viewer -hide">
           <button type="button" class="photoapp__btn -btn -delete js-delete-photo">
             <svg viewbox="0 0 24 24">
@@ -44,13 +46,10 @@
           </button>
           <div class="photoapp__polaroid"><img class="photoapp__img"></div>
         </div>
-        <div class="photoapp__controls -disabled">
-          <input type="file" name="userPhoto" accept="image/*" capture="" class="photoapp__hidden js-open-photo">
-        </div>
       </section>
     </main>
     <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js"></script>
-    <script src="/assets/panoptes/js/main.js"></script>
+    <script src="/assets/natseye/js/main.js"></script>
     <script id="toaster-template" type="text/template">
       <div class="toaster__card toaster{{= it.ind }}">
         <p>{{! it.message}}</p>

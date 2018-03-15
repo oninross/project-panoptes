@@ -1,7 +1,7 @@
 'use strict';
 
-import { ripple } from '../../../_assets/panoptes/js/_material';
-import { debounce, isMobile, easeOutExpo } from '../../../_assets/panoptes/js/_helper';
+import { ripple } from '../../../_assets/natseye/js/_material';
+import { debounce, isMobile, easeOutExpo } from '../../../_assets/natseye/js/_helper';
 
 const $window = $(window),
     $body = $('body'),

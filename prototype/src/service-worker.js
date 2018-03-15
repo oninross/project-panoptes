@@ -24,13 +24,13 @@
 // cache, then increment the CACHE_VERSION value. It will kick off the service worker update
 // flow and the old cache(s) will be purged as part of the activate event handler when the
 // updated service worker is activated.
-var version = '0.1.0',
+var version = '0.2.0',
     now = Date.now(),
     OFFLINE_URL = 'offline/',
     urlsToPrefetch = [
-        'assets/panoptes/css/main.css',
-        'assets/panoptes/js/main.js',
-        'assets/panoptes/css/fonts/icomoon.woff',
+        'assets/natseye/css/main.css',
+        'assets/natseye/js/main.js',
+        'assets/natseye/css/fonts/icomoon.woff',
         'manifest.json',
         OFFLINE_URL,
         'index.html',
