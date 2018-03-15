@@ -1,6 +1,6 @@
 {
   "name": "panoptes",
-  "version": "0.0.4",
+  "version": "0.1.0",
   "dependencies": {
     "browserify-shim": "^3.8.12",
     "dot": "^1.1.2",
@@ -71,7 +71,8 @@
     "AttrPlugin": "./node_modules/gsap/src/uncompressed/plugins/AttrPlugin.js",
     "CSSPlugin": "./node_modules/gsap/src/uncompressed/plugins/CSSPlugin.js",
     "mCustomScrollbar": "./node_modules/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js",
-    "scrollMonitor": "./node_modules/scrollmonitor/scrollmonitor.js"
+    "scrollMonitor": "./node_modules/scrollmonitor/scrollmonitor.js",
+    "resize-base64": "./node_modules/resize-base64/index"
   },
   "browserify-shim": {
     "jquery": "jQuery",

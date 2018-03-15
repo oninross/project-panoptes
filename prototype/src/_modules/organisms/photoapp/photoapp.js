@@ -7,16 +7,12 @@ export default class Photoapp {
     constructor() {
         if ($('.photoapp').length) {
             const that = this,
-                $window = $(window),
-                API_KEY = 'API_KEY';
+                $window = $(window);
 
             that.$window = $window;
             that.$message = $('.photoapp__message');
             that.$viewer = $('.photoapp__viewer');
-            that.$controls = $('.photoapp__controls');
             that.$camera = $('.photoapp__btn.-camera');
-            that.$loader = $('.photoapp__loader');
-            that.$percent = that.$loader.find('.percent');
             that.rotation = 0;
 
             $('.js-take-photo').on('click', function () {
@@ -24,67 +20,90 @@ export default class Photoapp {
             });
 
             $('.js-open-photo').on('change', function (e) {
-                const $this = $(this),
+                let $this = $(this),
                     tgt = e.target || window.event.srcElement,
                     photoAppImg = document.querySelector('.photoapp__img'),
-                    hiddenBtn = document.querySelector('.photoapp__hidden'),
                     files = tgt.files,
                     square = $window.width() - 50;
 
+                that.hiddenBtn = document.querySelector('.photoapp__hidden');
                 that.$message.text('analysing image');
+                that.$viewer.removeClass('-hide');
                 that.$camera.addClass('-hide');
-
-                $('body').animate({
-                    scrollTop: $(document).height(),
-                }, {
-                        duration: 500,
-                        easing: 'easeOutExpo'
-                    });
 
                 // FileReader support
                 if (FileReader && files && files.length) {
                     var fr = new FileReader();
 
                     fr.onload = function (e) {
-                        var frRes = fr.result;
+                        var image = new Image(),
+                            frRes = fr.result,
+                            dataUrl;
 
-                        $.ajax({
-                            type: 'POST',
-                            url: '//' + BASE_URL + '/godsEye',
-                            dataType: 'json',
-                            data: JSON.stringify({
-                                file: files,
-                                image: frRes
-                            }),
-                            contentType: 'application/json',
-                            success: function (data) {
-                                console.log(data);
+                        image.onload = function (imageEvent) {
 
-                                var classes = data.images[0].classifiers[0].classes;
-
-                                if (classes.length) {
-                                    that.$message.text(classes[0].class);
-
-                                    that.speak('en-US', 'native', 'There is a high chance that the image is ' + that.checkForVowel(classes[0].class) + classes[0].class);
-                                } else {
-                                    that.$message.text('unknown image');
-                                    that.speak('en-US', 'native', 'Sorry, Watston does\'t know what that is.');
+                            // Resize the image using canvas
+                            var canvas = document.createElement('canvas'),
+                                max_size = 300,// TODO : max size for a pic
+                                width = image.width,
+                                height = image.height;
+                            if (width > height) {
+                                if (width > max_size) {
+                                    height *= max_size / width;
+                                    width = max_size;
                                 }
-
-                            },
-                            error: function (err) {
-                                that.$message.text('oops! something went wrong');
-                                console.warn('ERROR');
-                                console.log(err);
+                            } else {
+                                if (height > max_size) {
+                                    width *= max_size / height;
+                                    height = max_size;
+                                }
                             }
-                        });
+
+                            canvas.width = width;
+                            canvas.height = height;
+                            canvas.getContext('2d').drawImage(image, 0, 0, width, height);
+
+                            //Getting base64 string;
+                            dataUrl = canvas.toDataURL('image/jpeg');
+
+                            $.ajax({
+                                type: 'POST',
+                                url: '//' + BASE_URL + '/godsEye',
+                                dataType: 'json',
+                                data: JSON.stringify({
+                                    file: files,
+                                    image: dataUrl
+                                }),
+                                contentType: 'application/json',
+                                success: function (data) {
+                                    console.log(data);
+
+                                    var classes = data.images[0].classifiers[0].classes;
+
+                                    if (classes.length) {
+                                        that.$message.text(classes[0].class);
+
+                                        that.speak('en-US', 'native', 'It\'s ' + that.checkForVowel(classes[0].class) + classes[0].class);
+                                    } else {
+                                        that.$message.text('unknown image');
+                                        that.speak('en-US', 'native', 'Sorry, Watston does\'t know what that is.');
+                                    }
+
+                                },
+                                error: function (err) {
+                                    that.$message.text('oops! something went wrong');
+                                    console.warn('ERROR');
+                                    console.log(err);
+                                }
+                            });
+                        }
+
+                        image.src = e.target.result;
 
                         photoAppImg.src = frRes;
 
                         photoAppImg.onload = function () {
-                            that.$controls.addClass('-preview').removeClass('-disabled');
-
-                            that.getOrientation(hiddenBtn.files[0], function (orientation) {
+                            that.getOrientation(that.hiddenBtn.files[0], function (orientation) {
                                 switch (orientation) {
                                     case 8:
                                         that.rotation = -90;
@@ -98,6 +117,10 @@ export default class Photoapp {
                                 }
                             });
                         };
+                    };
+
+                    fr.onerror = function (e) {
+                        console.error(e);
                     };
 
                     fr.readAsDataURL(files[0]);
@@ -178,13 +201,11 @@ export default class Photoapp {
     reset() {
         const that = this;
 
+        that.hiddenBtn.value = '';
         that.$message.text('tap to snap a photo');
-        that.$viewer.removeClass('-disabled -preview');
-        that.$controls.addClass('-disabled').removeClass('-preview');
+        that.$viewer.addClass('-hide').removeClass('-disabled -preview');
         that.$camera.removeClass('-hide');
-        that.$loader.addClass('-hide');
-        that.$percent.text('0%');
-        $('.photoapp__img').attr('src', '');
+        $('.photoapp__img').removeAttr('src');
     }
 
     speak(newLang, newVoice, string) {

@@ -31,27 +31,21 @@
     <main id="main">
       <section class="section photoapp">
         <div class="photoapp__message">tap to snap a photo</div>
-        <div class="photoapp__loader -hide">
-          <div class="percent">0%</div>
-          <svg viewbox="25 25 50 50" class="circular">
-            <circle cx="50" cy="50" r="20" fill="none" stroke-width="4" stroke-miterlimit="10" class="path"></circle>
-          </svg>
-        </div>
         <button type="button" class="photoapp__btn -btn -camera js-take-photo">
           <svg viewbox="0 0 24 24">
             <path d="M4,4H7L9,2H15L17,4H20A2,2 0 0,1 22,6V18A2,2 0 0,1 20,20H4A2,2 0 0,1 2,18V6A2,2 0 0,1 4,4M12,7A5,5 0 0,0 7,12A5,5 0 0,0 12,17A5,5 0 0,0 17,12A5,5 0 0,0 12,7M12,9A3,3 0 0,1 15,12A3,3 0 0,1 12,15A3,3 0 0,1 9,12A3,3 0 0,1 12,9Z"></path>
           </svg>
         </button>
-        <div class="photoapp__viewer"><img class="photoapp__img"></div>
-        <div class="photoapp__controls -disabled">
+        <div class="photoapp__viewer -hide">
           <button type="button" class="photoapp__btn -btn -delete js-delete-photo">
             <svg viewbox="0 0 24 24">
               <path d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z"></path>
             </svg>
           </button>
-          <form ref="uploadForm" action="http://10.16.0.118:8888/godsEye" method="post" enctype="multipart/form-data" class="photoapp__form">
-            <input type="file" name="userPhoto" accept="image/*" capture="" class="photoapp__hidden js-open-photo">
-          </form>
+          <div class="photoapp__polaroid"><img class="photoapp__img"></div>
+        </div>
+        <div class="photoapp__controls -disabled">
+          <input type="file" name="userPhoto" accept="image/*" capture="" class="photoapp__hidden js-open-photo">
         </div>
       </section>
     </main>
