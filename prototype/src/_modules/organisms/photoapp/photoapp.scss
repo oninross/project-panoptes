@@ -68,11 +68,6 @@
             width: 500px;
         }
 
-        @include desktop {
-            height: 768px;
-            width: 768px;
-        }
-
         img {
             @include absolute-center;
         }
