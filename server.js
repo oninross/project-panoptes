@@ -22,13 +22,7 @@ app.use(function (req, res, next) {
     res.setHeader('Content-Type', 'application/json');
     res.setHeader('Access-Control-Allow-Credentials', true);
 
-    if (req.secure) {
-        // request was via https, so do no special handling
-        next();
-    } else {
-        // request was via http, so redirect to https
-        res.redirect('https://' + req.headers.host + req.url);
-    }
+    next();
 });
 
 router.get('/', function (req, res) {
