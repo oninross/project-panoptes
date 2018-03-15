@@ -4,17 +4,19 @@ block content
     section.section.photoapp
         .photoapp__message tap to snap a photo
 
+        input.photoapp__hidden.js-open-photo(type='file', name='userPhoto', accept='image/*', capture='')
         button.photoapp__btn.-btn.-camera.js-take-photo(type="button")
             svg(viewbox='0 0 24 24')
                 path(d='M4,4H7L9,2H15L17,4H20A2,2 0 0,1 22,6V18A2,2 0 0,1 20,20H4A2,2 0 0,1 2,18V6A2,2 0 0,1 4,4M12,7A5,5 0 0,0 7,12A5,5 0 0,0 12,17A5,5 0 0,0 17,12A5,5 0 0,0 12,7M12,9A3,3 0 0,1 15,12A3,3 0 0,1 12,15A3,3 0 0,1 9,12A3,3 0 0,1 12,9Z')
+
+        .photoapp__details
 
         .photoapp__viewer.-hide
             button.photoapp__btn.-btn.-delete.js-delete-photo(type="button")
                 svg(viewbox='0 0 24 24')
                     path(d='M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z')
+
             .photoapp__polaroid
                 img.photoapp__img
 
-        .photoapp__controls.-disabled
-            input.photoapp__hidden.js-open-photo(type='file', name='userPhoto', accept='image/*', capture='')
 

@@ -18,38 +18,16 @@
         z-index: 10;
     }
 
-    &__loader {
-        @include transition(transform, $animTime, $easeInOutExpo);
+    &__details {
+        bottom: 0;
+        color: $white;
+        left: 0;
+        padding: 0 20px 15px;
+        position: fixed;
+        width: 100%;
 
-        @include absolute-center;
-
-        @include material-shadow(1);
-
-        background: $white;
-        border-radius: 50%;
-        height: 75px;
-        transform: translateY(0);
-        width: 75px;
-        z-index: 100;
-
-        &:before {
-            content: '';
-            display: block;
-            padding-top: 100%;
-        }
-
-        &.-hide {
-            transform: translateY(60vh);
-        }
-
-        .percent {
-            bottom: 0;
-            font-weight: $bold;
-            margin-top: 30px;
-            position: absolute;
-            text-align: center;
-            top: 0;
-            width: 100%;
+        p {
+            margin: 0;
         }
     }
 
@@ -83,23 +61,6 @@
         overflow: hidden;
         position: relative;
         width: inherit;
-    }
-
-    &__controls {
-        @include transition(transform, $animTime, $easeOutExpo);
-
-        align-items: flex-end;
-        bottom: 0;
-        display: flex;
-        justify-content: center;
-        position: absolute;
-        transform: translateY(0);
-        width: 100%;
-        z-index: 10;
-
-        &.-disabled {
-            transform: translateY(90px);
-        }
     }
 
     &__hidden {
