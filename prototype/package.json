@@ -1,5 +1,5 @@
 {
-  "name": "panoptes",
+  "name": "natseye",
   "version": "0.1.0",
   "dependencies": {
     "browserify-shim": "^3.8.12",
@@ -97,10 +97,10 @@
       "//": "Directories relative to `source` directory",
       "modules": "_modules",
       "layouts": "_layouts",
-      "images": "_assets/panoptes/images",
-      "css": "_assets/panoptes/css",
-      "fonts": "_assets/panoptes/css/fonts",
-      "js": "_assets/panoptes/js",
+      "images": "_assets/natseye/images",
+      "css": "_assets/natseye/css",
+      "fonts": "_assets/natseye/css/fonts",
+      "js": "_assets/natseye/js",
       "data": "_data"
     },
     "entries": {

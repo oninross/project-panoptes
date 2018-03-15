@@ -1,7 +1,7 @@
 'use strict';
 
-import { ripple, toaster } from '../../../_assets/panoptes/js/_material';
-import { BASE_URL, iOS } from '../../../_assets/panoptes/js/_helper';
+import { ripple, toaster } from '../../../_assets/natseye/js/_material';
+import { BASE_URL, iOS } from '../../../_assets/natseye/js/_helper';
 
 export default class Photoapp {
     constructor() {
