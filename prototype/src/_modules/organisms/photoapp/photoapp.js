@@ -7,8 +7,7 @@ export default class Photoapp {
     constructor() {
         if ($('.photoapp').length) {
             const that = this,
-                $window = $(window),
-                API_KEY = 'API_KEY';
+                $window = $(window);
 
             that.$window = $window;
             that.$message = $('.photoapp__message');
@@ -34,42 +33,72 @@ export default class Photoapp {
 
                 // FileReader support
                 if (FileReader && files && files.length) {
-                    console.log('True');
                     var fr = new FileReader();
 
                     fr.onload = function (e) {
-                        var frRes = fr.result;
+                        var image = new Image(),
+                            frRes = fr.result,
+                            dataUrl;
 
-                        $.ajax({
-                            type: 'POST',
-                            url: '//' + BASE_URL + '/godsEye',
-                            dataType: 'json',
-                            data: JSON.stringify({
-                                file: files,
-                                image: frRes
-                            }),
-                            contentType: 'application/json',
-                            success: function (data) {
-                                console.log(data);
+                        image.onload = function (imageEvent) {
 
-                                var classes = data.images[0].classifiers[0].classes;
-
-                                if (classes.length) {
-                                    that.$message.text(classes[0].class);
-
-                                    that.speak('en-US', 'native', 'It\'s ' + that.checkForVowel(classes[0].class) + classes[0].class);
-                                } else {
-                                    that.$message.text('unknown image');
-                                    that.speak('en-US', 'native', 'Sorry, Watston does\'t know what that is.');
+                            // Resize the image using canvas
+                            var canvas = document.createElement('canvas'),
+                                max_size = 300,// TODO : max size for a pic
+                                width = image.width,
+                                height = image.height;
+                            if (width > height) {
+                                if (width > max_size) {
+                                    height *= max_size / width;
+                                    width = max_size;
                                 }
-
-                            },
-                            error: function (err) {
-                                that.$message.text('oops! something went wrong');
-                                console.warn('ERROR');
-                                console.log(err);
+                            } else {
+                                if (height > max_size) {
+                                    width *= max_size / height;
+                                    height = max_size;
+                                }
                             }
-                        });
+
+                            canvas.width = width;
+                            canvas.height = height;
+                            canvas.getContext('2d').drawImage(image, 0, 0, width, height);
+
+                            //Getting base64 string;
+                            dataUrl = canvas.toDataURL('image/jpeg');
+
+                            $.ajax({
+                                type: 'POST',
+                                url: '//' + BASE_URL + '/godsEye',
+                                dataType: 'json',
+                                data: JSON.stringify({
+                                    file: files,
+                                    image: dataUrl
+                                }),
+                                contentType: 'application/json',
+                                success: function (data) {
+                                    console.log(data);
+
+                                    var classes = data.images[0].classifiers[0].classes;
+
+                                    if (classes.length) {
+                                        that.$message.text(classes[0].class);
+
+                                        that.speak('en-US', 'native', 'It\'s ' + that.checkForVowel(classes[0].class) + classes[0].class);
+                                    } else {
+                                        that.$message.text('unknown image');
+                                        that.speak('en-US', 'native', 'Sorry, Watston does\'t know what that is.');
+                                    }
+
+                                },
+                                error: function (err) {
+                                    that.$message.text('oops! something went wrong');
+                                    console.warn('ERROR');
+                                    console.log(err);
+                                }
+                            });
+                        }
+
+                        image.src = e.target.result;
 
                         photoAppImg.src = frRes;
 
