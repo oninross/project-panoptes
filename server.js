@@ -4,7 +4,6 @@ var express = require('express'),
     http = require('http').Server(app),
     bodyParser = require('body-parser'),
     VisualRecognitionV3 = require('watson-developer-cloud/visual-recognition/v3'),
-    ssl = require('express-ssl'),
     router = express.Router(),
     visualRecognition = new VisualRecognitionV3({
         api_key: '6666546e9cca61687197f337b5b0f4f18a08e70c',
@@ -13,7 +12,6 @@ var express = require('express'),
 
 
 app.use(router);
-app.use(ssl());
 app.use(bodyParser.json({ limit: '50mb' }));
 app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 app.use(express.static(__dirname + '/client'));
@@ -24,13 +22,7 @@ app.use(function (req, res, next) {
     // res.setHeader('Content-Type', 'application/json');
     // res.setHeader('Access-Control-Allow-Credentials', true);
 
-    if (req.secure) {
-        // request was via https, so do no special handling
-        next();
-    } else {
-        // request was via http, so redirect to https
-        res.redirect('https://' + req.headers.host + req.url);
-    }
+    next();
 });
 
 router.get('/', function (req, res) {
@@ -40,8 +32,6 @@ router.get('/', function (req, res) {
 
 app.post('/godsEye', function (req, res) {
     console.log('God\'s Eye');
-
-    console.log(req.body.image)
 
     let base64String = req.body.image,
         base64Image = base64String.split(';base64,').pop();
@@ -77,29 +67,3 @@ app.post('/godsEye', function (req, res) {
 http.listen(process.env.PORT || 8888, function () {
     console.log('listening on *:8888');
 });
-
-// Reset = "\x1b[0m"
-// Bright = "\x1b[1m"
-// Dim = "\x1b[2m"
-// Underscore = "\x1b[4m"
-// Blink = "\x1b[5m"
-// Reverse = "\x1b[7m"
-// Hidden = "\x1b[8m"
-
-// FgBlack = "\x1b[30m"
-// FgRed = "\x1b[31m"
-// FgGreen = "\x1b[32m"
-// FgYellow = "\x1b[33m"
-// FgBlue = "\x1b[34m"
-// FgMagenta = "\x1b[35m"
-// FgCyan = "\x1b[36m"
-// FgWhite = "\x1b[37m"
-
-// BgBlack = "\x1b[40m"
-// BgRed = "\x1b[41m"
-// BgGreen = "\x1b[42m"
-// BgYellow = "\x1b[43m"
-// BgBlue = "\x1b[44m"
-// BgMagenta = "\x1b[45m"
-// BgCyan = "\x1b[46m"
-// BgWhite = "\x1b[47m"

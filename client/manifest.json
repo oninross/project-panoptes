@@ -6,8 +6,8 @@
     "start_url": "./photo/index.html",
     "display": "standalone",
     "orientation": "portrait",
-    "background_color": "#111111",
-    "theme_color": "#111111",
+    "background_color": "#0D47A1",
+    "theme_color": "#0D47A1",
     "icons": [
         {
             "src": "/assets/natseye/images/favicon/android-icon-36x36.png",
